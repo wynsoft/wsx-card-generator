@@ -1,5 +1,5 @@
 {
-  "name": "wsx-card-generator",
+  "name": "@wynsoft/wsx-card-generator",
   "version": "1.0.0",
   "description": "Produces opinionated cards based on the data provided.",
   "private": false,
