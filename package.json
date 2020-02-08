@@ -2,11 +2,21 @@
   "name": "wsx-card-generator",
   "version": "1.0.0",
   "description": "Produces opinionated cards based on the data provided.",
-  "main": "wsx-card-generator.js",
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://wynsoft.homeip.net/Bonobo.Git.Server/wsx-card-generator.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Wynsoft Systems Inc.",
   "license": "MIT",
   "dependencies": {}
 }
