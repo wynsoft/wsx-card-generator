@@ -1,0 +1,12 @@
+{
+  "name": "wsx-card-generator",
+  "version": "1.0.0",
+  "description": "Produces opinionated cards based on the data provided.",
+  "main": "wsx-card-generator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}

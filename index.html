@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Card Generator Demo</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 20px;
+        font-family: "Roboto", sans-serif;
+      }
+      label {
+        font-family: "Roboto", sans-serif;
+        font-weight: 600;
+      }
+      input[type="text"] {
+        font-family: "Roboto", sans-serif;
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        max-width: 80%;
+      }
+      textarea {
+        width: 80%;
+        height: 120px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        font-family: "Roboto", sans-serif;
+      }
+      button {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        font-family: "Roboto", sans-serif;
+        background-color: #003366;
+        color: #fff;
+        min-width: 100px;
+      }
+    </style>
+    <script src="card-generator.js" defer></script>
+  </head>
+  <body>
+    <h1>Card Generator Demo</h1>
+    <h5>Using RESTful API:</h5>
+    <div>
+      <input
+        id="txtURL"
+        type="text"
+        size="100"
+        placeholder="Enter url for api"
+        value="https://jsonplaceholder.typicode.com/users"
+      />
+      <button type="button" onClick="getData()">Generate</button>
+    </div>
+    <h5>Using Custom JSON:</h5>
+    <h6>(Must be an Array of objects)</h6>
+    <div>
+      <textarea id="txtCustom" placeholder="Enter array of objects">
+[
+  {"name": "Wynsoft Systems", "icon": "https://wynsoft.ca/favicon.ico", "url": "https://wynsoft.ca"},
+  {"name": "W3 Schools", "icon": "https://www.w3schools.com/favicon.ico", "url": "https://www.w3schools.com"},
+  {"name": "MDN Web Docs", "icon": "https://developer.mozilla.org/static/img/favicon32.7f3da72dcea1.png", "url": "https://developer.mozilla.org"}
+]
+      </textarea>
+      <button type="button" onClick="getCustomData()">Generate</button>
+    </div>
+
+    <div id="container">
+      <card-generator
+        id="cardgroup1"
+        shadow="closed"
+        font="Roboto"
+        width="300"
+        data="[]"
+      ></card-generator>
+    </div>
+    <script>
+      (() => {
+        fetch("https://jsonplaceholder.typicode.com/users")
+          .then(response => response.json())
+          .then(json => {
+            const src = JSON.stringify(json);
+            let cardgrp1 = document.getElementById("cardgroup1");
+            cardgrp1.setAttribute("data", src);
+          });
+      })();
+
+      const getData = () => {
+        const url = document.getElementById("txtURL").value;
+        fetch(url)
+          .then(response => response.json())
+          .then(json => {
+            const src = JSON.stringify(json);
+            let cardgrp1 = document.getElementById("cardgroup1");
+            cardgrp1.setAttribute("data", src);
+          });
+      };
+
+      const getCustomData = () => {
+        const src = document.getElementById("txtCustom").value;
+        let cardgrp1 = document.getElementById("cardgroup1");
+        cardgrp1.setAttribute("data", src);
+      };
+    </script>
+  </body>
+</html>
