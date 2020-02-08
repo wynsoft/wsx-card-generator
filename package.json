@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://wynsoft.homeip.net/Bonobo.Git.Server/wsx-card-generator.git"
+    "url": "https://github.com/wynsoft/wsx-card-generator.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
