@@ -6,8 +6,10 @@ class CardGenerator extends HTMLElement {
     this._data = [];
     this._font = "Roboto";
     this._width = "200";
+    this._background = "#fff";
+    this._color = "#000";
 
-    this._shadow = this.attachShadow({ mode: this.getAttribute("shadow") });
+    this._shadowDOM = this.attachShadow({ mode: "closed" });
 
     // Create spans
     this._wrapper = document.createElement("ul");
@@ -35,8 +37,22 @@ class CardGenerator extends HTMLElement {
     this.setAttribute("width", width);
   }
 
+  get background() {
+    return this._background;
+  }
+  set background(background) {
+    this.setAttribute("background", background);
+  }
+
+  get color() {
+    return this._color;
+  }
+  set color(color) {
+    this.setAttribute("color", color);
+  }
+
   static get observedAttributes() {
-    return ["data", "font", "width"];
+    return ["data", "font", "width", "background", "color"];
   }
 
   capitalize(str) {
@@ -125,66 +141,7 @@ class CardGenerator extends HTMLElement {
   }
 
   render() {
-    // Create some CSS to apply to the shadow dom
-    const style = document.createElement("style");
-
-    style.textContent = `
-        .card-group {
-          display: flex;
-          flex-wrap: wrap;
-          list-style: none;
-          font-family: "${this.font}", sans-serif;
-        }
-  
-        .card-item {
-          font-size: 0.8rem;
-          min-width: ${this.width}px;
-          max-width: ${this.width}px;
-          flex: 1;
-          border: 1px solid #ccc;
-          padding: 15px;
-          background: white;
-          border-radius: 5px;
-          color: #000;
-          margin: 10px;
-        }
-        .card-item div {
-            line-height: 1.3rem;
-            margin-bottom: 5px;
-        }
-        .label {
-            display: block;
-            font-weight: bold;
-        }
-        .sub-item {
-            display: block;
-            margin-left: 30px;
-            line-height: 1.3rem;
-        }
-        .secondary {
-            color: #909090;
-            margin-right: 15px;
-            display: inline-block;
-            min-width: 75px;
-        }
-        .image {
-            max-width: 100%;
-        }
-        .link {
-            color: #003366;
-            text-decoration: none;
-        }
-        .link:hover {
-            text-decoration: underline;
-        }
-        .link:visited {
-            color: #003366;
-        }
-      `;
-
     // Attach the created elements to the shadow dom
-    this._shadow.appendChild(style);
-
     const content = this.fromJson(this.getAttribute("data"));
     if (Array.isArray(content)) {
       content.forEach(item => {
@@ -193,7 +150,7 @@ class CardGenerator extends HTMLElement {
     } else {
       throw new Error("The data attribute should contain an Array of objects.");
     }
-    this._shadow.appendChild(this._wrapper);
+    this._shadowDOM.appendChild(this._wrapper);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -208,11 +165,72 @@ class CardGenerator extends HTMLElement {
       case "width":
         this._width = newValue;
         break;
+      case "background":
+        this._background = newValue;
+        break;
+      case "color":
+        this._color = newValue;
+        break;
     }
     this.render();
   }
+
   connectedCallback() {
-    this.data = this.getAttribute("data") || "";
+    const css = `
+    .card-group {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      font-family: "${this.font}", sans-serif;
+    }
+
+    .card-item {
+      font-size: 0.8rem;
+      min-width: ${this.width}px;
+      max-width: ${this.width}px;
+      flex: 1;
+      border: 1px solid #ccc;
+      padding: 15px;
+      background-color: ${this.background};
+      border-radius: 5px;
+      color: ${this.color};
+      margin: 10px;
+    }
+    .card-item div {
+        line-height: 1.3rem;
+        margin-bottom: 5px;
+    }
+    .label {
+        display: block;
+        font-weight: 600;
+    }
+    .sub-item {
+        display: block;
+        margin-left: 20px;
+        line-height: 1.3rem;
+    }
+    .secondary {
+        margin-right: 15px;
+        display: inline-block;
+        min-width: 75px;
+    }
+    .image {
+        max-width: 100%;
+    }
+    .link {
+        color: #003366;
+        text-decoration: none;
+    }
+    .link:hover {
+        text-decoration: underline;
+    }
+    .link:visited {
+        color: #003366;
+    }
+  `;
+    const style = document.createElement("style");
+    style.textContent = css;
+    this._shadowDOM.appendChild(style);
   }
 
   fromJson(str) {

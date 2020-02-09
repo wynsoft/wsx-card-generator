@@ -7,6 +7,7 @@
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
     />
+    <script src="dist/index.js" defer></script>
     <style>
       body {
         margin: 20px;
@@ -41,7 +42,6 @@
         min-width: 100px;
       }
     </style>
-    <script src="dist/index.js" defer></script>
   </head>
   <body>
     <h1>Card Generator Demo</h1>
@@ -68,13 +68,13 @@
       </textarea>
       <button type="button" onClick="getCustomData()">Generate</button>
     </div>
-
     <div id="container">
       <card-generator
         id="cardgroup1"
-        shadow="closed"
         font="Roboto"
         width="300"
+        background="#fff"
+        color="#000"
         data="[]"
       ></card-generator>
     </div>
