@@ -181,6 +181,8 @@ class CardGenerator extends HTMLElement {
       display: flex;
       flex-wrap: wrap;
       list-style: none;
+      padding: 0;
+      margin: 0;
       font-family: "${this.font}", sans-serif;
     }
 
